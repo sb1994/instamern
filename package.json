@@ -1,0 +1,39 @@
+{
+  "name": "instamern",
+  "version": "1.0.0",
+  "description": "Mern Project for uploading and commenting on Images",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server.js",
+    "users": "nodemon users.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.27.0",
+    "mongoose": "^5.9.20",
+    "nodemon": "^2.0.4",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "socket.io": "^2.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sb1994/instamern.git"
+  },
+  "author": "Sean Boyle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sb1994/instamern/issues"
+  },
+  "homepage": "https://github.com/sb1994/instamern#readme"
+}
