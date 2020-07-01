@@ -69,7 +69,6 @@ router.post('/register', (req, res) => {
 })
 router.post('/login', (req, res) => {
   const { email, password } = req.body
-  console.log(req.body)
 
   // // //find user by email
   User.findOne({

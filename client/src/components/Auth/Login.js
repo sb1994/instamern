@@ -11,14 +11,18 @@ class Login extends Component {
     }
   }
   componentDidMount() {
-    console.log(this.props.auth.user)
+    let { auth, history } = this.props
+    // console.log(isAuthenticated)
+
+    if (auth.isAuthenticated) {
+      history.push('/profile')
+    }
   }
   handleInputChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })
   }
 
   handleSubmit = () => {
-    console.log(this.state)
     let { email, password } = this.state
     if (email === '' || password === '') {
       alert('Both Inputs Are Required')
