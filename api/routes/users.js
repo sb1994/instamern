@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
 const User = require('../models/User')
+const keys = require('../../config/key')
 router.get('/test', (req, res) => res.json({ msg: 'Users Works' }))
 
 router.post('/register', (req, res) => {
@@ -21,7 +22,7 @@ router.post('/register', (req, res) => {
     .then((user) => {
       if (user) {
         errors.email = 'Email or Name already exists'
-        return res.status(400).json({ errors: errors })
+        return res.status(200).json(errors)
       } else {
         const newUser = new User({
           name: req.body.name,
@@ -31,20 +32,39 @@ router.post('/register', (req, res) => {
           password: req.body.password,
         })
         // console.log(newUser);
+        // res.json({ user: newUser })
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
             if (err) throw err
             newUser.password = hash
             newUser
               .save()
-              .then((user) => res.json({ user: user }))
-              .catch((err) => console.log(err))
+              .then((user) => {
+                const payload = {
+                  id: user.id,
+                  name: user.name,
+                  profile_pic: user.profile_pic,
+                  email: user.email,
+                }
+                jwt.sign(
+                  payload,
+                  process.env.SECRET,
+                  { expiresIn: 3600 * 1000 * 1000 * 20 },
+                  (err, token) => {
+                    res.json({
+                      success: true,
+                      token: `${token}`,
+                    })
+                  }
+                )
+              })
+              .catch((err) => res.json(err))
             // console.log(newUser);
           })
         })
       }
     })
-    .catch((err) => console.log(err))
+    .catch((err) => res.json(err))
   // // console.log(req.body);
 })
 router.post('/login', (req, res) => {
@@ -64,7 +84,6 @@ router.post('/login', (req, res) => {
       if (isMatch) {
         //user matched create the payload taht will
         // be sent in the token
-        console.log(isMatch)
 
         const payload = {
           id: user.id,
@@ -74,7 +93,7 @@ router.post('/login', (req, res) => {
         }
         jwt.sign(
           payload,
-          keys.secretOrKey,
+          process.env.SECRET,
           { expiresIn: 3600 * 1000 * 1000 * 20 },
           (err, token) => {
             res.json({
