@@ -17,6 +17,23 @@ export const registerUser = (userData) => (dispatch) => {
       })
     )
 }
+export const getUsers = () => (dispatch) => {
+  axios
+    .get('/api/users/all')
+    .then((res) =>
+      dispatch({
+        type: types.GET_USERS,
+        payload: res.data,
+      })
+    )
+
+    .catch((err) =>
+      dispatch({
+        type: types.FAIL_GET_USERS,
+        payload: err.response.data,
+      })
+    )
+}
 
 // export const addFriend = user_id => dispatch => {
 //   // console.log(user_id);
@@ -143,11 +160,8 @@ export const getSearchedUser = (id) => {
       .get(`/api/users/${id}`)
       // .get(`https://jsonplaceholder.typicode.com/todos/1`)
       .then((result) => {
-        // dispatch(setLoggedUser(result.data.user))
-        dispatch(setSearchedUser(result.data.user[0]))
-        // console.log(result.data.user[0])
-
-        // dispatch(setSearchedUser(result.data.user[0]))
+        dispatch(setSearchedUser(result.data))
+        // console.log(result)
       })
       .catch((err) => {
         console.log(err)
@@ -172,7 +186,7 @@ export const loginAuth = (email, password) => {
       .then((result) => {
         const token = result.data.token
         //sets the expirey date
-        const expire = new Date(new Date().getTime() + 10000 * 1000)
+        // const expire = new Date(new Date().getTime() + 10000 * 1000)
         //stores the the token and the expireation date in the browser
         //as a cookie
         localStorage.setItem('token', token)

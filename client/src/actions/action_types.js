@@ -40,6 +40,7 @@ export const DELETE_COMMENT = 'DELETE_COMMENT'
 
 //Search action Types
 export const GET_USERS = 'GET_USERS'
+export const FAIL_GET_USERS = 'FAIL_GET_USERS'
 export const GET_SEARCHED_USER = 'GET_SEARCHED_USER'
 export const SET_SEARCHED_USER = 'SET_SEARCHED_USER'
 export const FILTER_USERS = 'FILTER_USERS'

@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 class Landing extends Component {
-  constructor(props) {
-    super(props)
-  }
   componentDidMount() {
     console.log(this.props.auth.isAuthenticated)
     let { isAuthenticated } = this.props.auth

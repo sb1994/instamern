@@ -7,13 +7,16 @@ import setUserToken from './utils/setUserToken'
 import jwt_decode from 'jwt-decode'
 
 import store from './store'
-import { setLoggedUser, logoutUser } from './actions/userAuthActions'
+import { setLoggedUser } from './actions/userAuthActions'
 
 //app main routing compoents
 import Landing from './components/Landing'
 import Login from './components/Auth/Login'
 import Register from './components/Auth/Register'
 import Profile from './components/Profile/Profile'
+import EditProfile from './components/Profile/EditProfile'
+import UserList from './components/Users/UsersList'
+import UserProfile from './components/Users/UserProfile'
 
 if (localStorage.token) {
   setUserToken(localStorage.token)
@@ -32,6 +35,9 @@ class App extends Component {
             <Route exact path='/login' component={Login} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/profile' component={Profile} />
+            <Route exact path='/profile/:id' component={UserProfile} />
+            <Route exact path='/profile/edit' component={EditProfile} />
+            <Route exact path='/recommended' component={UserList} />
           </Switch>
         </Router>
       </Provider>

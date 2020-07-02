@@ -1,5 +1,8 @@
-import { SET_LOGGED_USER, SET_SEARCHED_USER } from '../actions/action_types'
-import { updateStateObject } from '../utils/setState'
+import {
+  SET_LOGGED_USER,
+  SET_SEARCHED_USER,
+  GET_USERS,
+} from '../actions/action_types'
 import isEmpty from '../validation/isEmpty'
 
 const initialState = {
@@ -9,14 +12,8 @@ const initialState = {
   loading: false,
   isAuthenticated: false,
   user: {},
-  searchedUser: {}
-}
-
-const startAuth = (state, action) => {
-  return updateStateObject(state, {
-    error: null,
-    loading: true
-  })
+  searchedUser: {},
+  users: [],
 }
 
 const auth = (state = initialState, action) => {
@@ -25,13 +22,18 @@ const auth = (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: !isEmpty(action.payload),
-        user: action.payload
+        user: action.payload,
+      }
+    case GET_USERS:
+      return {
+        ...state,
+        users: action.payload,
       }
     case SET_SEARCHED_USER:
       return {
         ...state,
         isAuthenticated: !isEmpty(action.payload),
-        searchedUser: action.payload
+        searchedUser: action.payload,
       }
     default:
       return state
