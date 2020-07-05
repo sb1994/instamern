@@ -35,27 +35,30 @@ export const getUsers = () => (dispatch) => {
     )
 }
 
-// export const addFriend = user_id => dispatch => {
-//   // console.log(user_id);
-//   dispatch({
-//     type: types.ADD_FRIEND
-//   })
-//   axios
-//     .post(`/api/users/friends/add/${user_id}`, user_id)
-//     .then(res => {
-//       console.log(res.data)
-//     })
+export const addFollow = (user_id) => (dispatch) => {
+  axios
+    .post(`/api/users/follow/add/${user_id}`, user_id)
+    .then((res) => {
+      if (!res.data.updated) {
+        console.log('user follower list not updated')
+      } else {
+        dispatch({
+          type: types.SUCCESS_FOLLOW,
+          payload: res.data,
+        })
+      }
+    })
 
-//     .catch(err =>
-//       dispatch({
-//         type: types.FAIL_ADD_FRIEND,
-//         payload: err.response.data
-//       })
-//     )
-//   return {
-//     type: types.ADD_FRIEND
-//   }
-// }
+    .catch((err) =>
+      dispatch({
+        type: types.FAIL_FOLLOW,
+        payload: err.response.data,
+      })
+    )
+  // dispatch({
+  //   type: types.SUCCESS_FOLLOW,
+  // })
+}
 // export const cancelFriendRequest = user_id => dispatch => {
 //   // console.log(user_id);
 //   dispatch({
@@ -144,9 +147,9 @@ export const getCurrentUser = () => {
     axios
       .get('/api/users/current')
       .then((result) => {
-        console.log(result)
+        // console.log(result)
 
-        dispatch(setLoggedUser(result.data.user))
+        dispatch(setLoggedUser(result.data))
         // console.log(result.data);
       })
       .catch((err) => {

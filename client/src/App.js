@@ -34,9 +34,9 @@ class App extends Component {
             <Route exact path='/' component={Landing} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/register' component={Register} />
-            <Route exact path='/profile' component={Profile} />
+            {/* <Route exact path='/profile' component={Profile} /> */}
             <Route exact path='/profile/:id' component={UserProfile} />
-            <Route exact path='/profile/edit' component={EditProfile} />
+            <Route exact path='/user/edit' component={EditProfile} />
             <Route exact path='/recommended' component={UserList} />
           </Switch>
         </Router>

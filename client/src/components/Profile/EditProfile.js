@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 class EditProfile extends Component {
   render() {
     return (
-      <div>
+      <div className='container'>
         <h1>Edit Profile</h1>
       </div>
     )

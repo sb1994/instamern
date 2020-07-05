@@ -6,18 +6,48 @@ const passport = require('passport')
 const User = require('../models/User')
 const keys = require('../../config/key')
 router.get('/test', (req, res) => res.json({ msg: 'Users Works' }))
-
-router.get('/all', (req, res) => {
+router.get(
+  '/current',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    User.findById(req.user.id, (err, user) => {
+      res.json(user)
+    })
+  }
+)
+router.get('/all', async (req, res) => {
   const errors = {}
+  // let {users = }
+  try {
+    const data = await User.find({})
+      .populate('followers.user')
+      .populate('following.user')
+      .then((users) => {
+        for (let i = 0; i < users.length; i++) {
+          const element = users[i].followers.length
+          // console.log(users.length)
+
+          console.log(element)
+        }
+        if (users) {
+          return res.status(200).json(users)
+        }
+      })
+    // const data = await User.aggregate([
+
+    //     $match: null,
+    //     {$project: {
+    //       n: { $size: '$followers' },
+    //     }},
+    //   ,
+    // ])
+  } catch (error) {
+    console.error(error.message)
+  }
 
   //checks wether the username or email already exists
-  User.find({})
-    .then((users) => {
-      if (users) {
-        return res.status(200).json(users)
-      }
-    })
-    .catch((err) => res.json(err))
+  // User
+  //   .catch((err) => res.json(err))
   // // console.log(req.body);
 })
 router.get('/:id', (req, res) => {
@@ -25,6 +55,8 @@ router.get('/:id', (req, res) => {
 
   //checks wether the username or email already exists
   User.findById(req.params.id)
+    .populate('followers.user')
+    .populate('following.user')
     .then((user) => {
       if (user) {
         return res.status(200).json(user)
@@ -54,7 +86,7 @@ router.post('/register', (req, res) => {
           name: req.body.name,
           email: req.body.email,
           profile_pic:
-            'https://ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png',
+            'http://www.culpepperandassociates.com/wp-content/uploads/2014/08/dummy-avatar.png',
           password: req.body.password,
         })
         // console.log(newUser);
@@ -67,7 +99,7 @@ router.post('/register', (req, res) => {
               .save()
               .then((user) => {
                 const payload = {
-                  id: user.id,
+                  _id: user.id,
                   name: user.name,
                   profile_pic: user.profile_pic,
                   email: user.email,
@@ -133,4 +165,59 @@ router.post('/login', (req, res) => {
     })
   })
 })
+router.post(
+  '/follow/add/:followee_id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    let { followee_id } = req.params
+    let { user } = req
+    User.findOneAndUpdate(
+      {
+        _id: user._id,
+        'following.user': { $ne: followee_id },
+      },
+      {
+        $addToSet: {
+          following: { user: followee_id },
+        },
+      },
+      (err) => {
+        if (err) {
+          console.log('Error:', err)
+        } else {
+          // res.json({ mess: 'it works' })
+          User.findOneAndUpdate(
+            {
+              _id: followee_id,
+              'followers.user': { $ne: user._id },
+            },
+            {
+              $addToSet: {
+                followers: { user: user._id },
+              },
+            },
+            {
+              new: true,
+            },
+            (err, searchedUser) => {
+              if (err) {
+                console.log('Error:', err)
+              } else {
+                if (searchedUser === null) {
+                  User.findById(followee_id).then((user) => {
+                    console.log(user)
+                    res.json(user)
+                  })
+                  // res.json({ updated: false })
+                } else {
+                  res.json(searchedUser)
+                }
+              }
+            }
+          )
+        }
+      }
+    )
+  }
+)
 module.exports = router

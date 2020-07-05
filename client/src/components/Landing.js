@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { getCurrentUser } from '../actions/userAuthActions'
 class Landing extends Component {
   componentDidMount() {
     console.log(this.props.auth.isAuthenticated)
-    let { isAuthenticated } = this.props.auth
+    let { isAuthenticated, user } = this.props.auth
     if (isAuthenticated) {
-      this.props.history.push('/profile')
+      this.props.getCurrentUser(user._id)
+      this.props.history.push(`/profile/${user._id}`)
     }
   }
   render() {
@@ -21,4 +23,4 @@ const mapStateToProps = (state) => {
     auth: state.auth,
   }
 }
-export default connect(mapStateToProps, {})(Landing)
+export default connect(mapStateToProps, { getCurrentUser })(Landing)
