@@ -6,6 +6,7 @@ const passport = require('passport')
 const http = require('http')
 //api routes files
 const users = require('./api/routes/users')
+const posts = require('./api/routes/posts')
 
 const cors = require('cors')
 dotenv.config()
@@ -35,6 +36,7 @@ app.use((req, res, next) => {
   next()
 })
 app.use('/api/users', users)
+app.use('/api/posts', posts)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'))

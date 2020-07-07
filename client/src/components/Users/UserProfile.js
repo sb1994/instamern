@@ -137,6 +137,11 @@ class UserProfile extends Component {
           </div>
 
           <hr />
+          <div className='row'>
+            <div className='col-12'>
+              <h1>Posts</h1>
+            </div>
+          </div>
         </div>
       )
     }

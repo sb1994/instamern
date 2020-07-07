@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken')
 const passport = require('passport')
 const User = require('../models/User')
 const keys = require('../../config/key')
-const { findById } = require('../models/User')
 router.get('/test', (req, res) => res.json({ msg: 'Users Works' }))
 router.get(
   '/current',
