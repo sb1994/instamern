@@ -3,6 +3,7 @@ import {
   SET_SEARCHED_USER,
   GET_USERS,
   SUCCESS_FOLLOW,
+  SUCCESS_FOLLOW_REMOVE,
 } from '../actions/action_types'
 import isEmpty from '../validation/isEmpty'
 
@@ -33,10 +34,14 @@ const auth = (state = initialState, action) => {
     case SET_SEARCHED_USER:
       return {
         ...state,
-        isAuthenticated: !isEmpty(action.payload),
         searchedUser: action.payload,
       }
     case SUCCESS_FOLLOW:
+      return {
+        ...state,
+        searchedUser: action.payload,
+      }
+    case SUCCESS_FOLLOW_REMOVE:
       return {
         ...state,
         searchedUser: action.payload,

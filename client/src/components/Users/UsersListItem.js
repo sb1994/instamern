@@ -18,12 +18,19 @@ class UsersListItem extends Component {
     let { user } = this.props
     return (
       <div className='list-group-item'>
-        <img
-          src={user.profile_pic}
-          alt=''
-          className='img-fluid'
-          onClick={this.showUserProfile}
-        />
+        <div className='row'>
+          <div className='col-6'>
+            <img
+              src={user.profile_pic}
+              alt=''
+              className='img-fluid float-left'
+              onClick={this.showUserProfile}
+              style={{ height: 100 }}
+            />
+            <p>{user.name}</p>
+          </div>
+          <div className='col-6'>Inputs</div>
+        </div>
       </div>
     )
   }
