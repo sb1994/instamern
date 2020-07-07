@@ -17,6 +17,9 @@ import EditProfile from './components/Profile/EditProfile'
 import UserList from './components/Users/UsersList'
 import UserProfile from './components/Users/UserProfile'
 
+//navigation
+import Navigation from './components/Nav/Navigation'
+
 if (localStorage.token) {
   setUserToken(localStorage.token)
   const decoded = jwt_decode(localStorage.token)
@@ -29,6 +32,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router>
+          <Navigation />
           <Switch>
             <Route exact path='/' component={Landing} />
             <Route exact path='/login' component={Login} />

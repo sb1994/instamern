@@ -5,11 +5,14 @@ class Landing extends Component {
   componentDidMount() {
     console.log(this.props.auth.isAuthenticated)
     let { isAuthenticated, user } = this.props.auth
+    console.log(user)
+
     if (isAuthenticated) {
-      this.props.getCurrentUser(user._id)
+      // this.props.getCurrentUser(user.id)
       this.props.history.push(`/profile/${user._id}`)
     }
   }
+  componentDidUpdate() {}
   render() {
     return (
       <div className='container'>

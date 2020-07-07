@@ -42,61 +42,13 @@ class UserProfile extends Component {
     })
     // console.log(this.props.searchedUser);
   }
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (
-  //     prevProps.auth.searchedUser.followers !==
-  //       this.props.auth.searchedUser.followers ||
-  //     prevState !== this.state
-  //   ) {
-  //     console.log(prevProps.auth.searchedUser)
-  //     console.log(this.props.auth.searchedUser)
-  //     let { followers, following } = this.props.auth.searchedUser
-  //     this.setState((prevState) => ({
-  //       msg: 'searchUser state changed',
-  //     }))
-
-  //     console.log(followers)
-  //   } else {
-  //     console.log('state stayed the same')
-  //   }
-  // }
-  // componentWillReceiveProps(nextProps) {
-  //   // console.log(nextProps.auth.isAuthenticated)
-  //   if (nextProps.auth.isAuthenticated) {
-  //     // this.props.getCurrentUser(this.props.auth.user.id)
-  //     console.log(this.props.auth.searchedUser.followers)
-  //     let sortedFollowers = []
-  //     let sortedFollowings = []
-  //     let { alreadyFollowing } = this.state
-  //     let { followers, following } = this.props.auth.searchedUser
-  //     let { user } = this.props.auth
-  //     _.forEach(followers, (follower) => {
-  //       if (follower.user._id === user._id) {
-  //         this.setState({
-  //           alreadyFollowing: true,
-  //         })
-  //       } else {
-  //         this.setState({
-  //           alreadyFollowing: false,
-  //         })
-  //       }
-  //       sortedFollowers.push(follower.user._id)
-  //     })
-
-  //     _.forEach(following, (followingee) => {
-  //       sortedFollowings.push(followingee.user._id)
-  //     })
-  //     console.log(followers)
-  //     console.log(following)
-
-  //     // this.props.getCurrentUser(nextProps.auth.user._id)
-  //     // this.props.history.push(`/profile/${nextProps.auth.user._id}`)
-  //   }
-  // }
-  showEditPage = () => {
-    this.props.history.push('/user/edit')
+  componentWillReceiveProps(nextProps) {
+    // console.log(nextProps.auth.isAuthenticated)
+    if (!nextProps.auth.isAuthenticated) {
+      this.props.history.push('/login')
+    }
   }
-  showRecommmendedUsers = () => {
+  showEditPage = () => {
     this.props.history.push('/user/edit')
   }
   handleAddFollow = () => {
@@ -194,8 +146,6 @@ class UserProfile extends Component {
 const mapStateToProps = (state) => ({
   auth: state.auth,
 })
-
-const mapDispatchToProps = {}
 
 export default connect(mapStateToProps, {
   getSearchedUser,

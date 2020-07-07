@@ -5,8 +5,6 @@ import { withRouter } from 'react-router-dom'
 class UsersListItem extends Component {
   constructor(props) {
     super(props)
-
-    this.state = {}
   }
 
   showUserProfile = () => {

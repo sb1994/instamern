@@ -173,7 +173,7 @@ export const getCurrentUser = () => {
         // console.log(result.data);
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err.message)
       })
   }
 }
@@ -290,4 +290,5 @@ export const logoutUser = () => (dispatch) => {
   setUserToken(false)
   // Set current user to {} which will set isAuthenticated to false
   dispatch(setLoggedUser({}))
+  dispatch(setSearchedUser({}))
 }

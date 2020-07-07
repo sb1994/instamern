@@ -11,8 +11,12 @@ router.get(
   '/current',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    User.findById(req.user.id, (err, user) => {
-      res.json(user)
+    User.findById(req.user._id, (err, user) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.json(user)
+      }
     })
   }
 )
@@ -138,7 +142,7 @@ router.post('/login', (req, res) => {
         // be sent in the token
 
         const payload = {
-          id: user.id,
+          _id: user.id,
           name: user.name,
           profile_pic: user.profile_pic,
           email: user.email,

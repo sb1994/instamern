@@ -29,7 +29,7 @@ class Login extends Component {
   }
   componentWillReceiveProps(nextProps) {
     // console.log(nextProps.auth.isAuthenticated)
-    if (this.props.auth.isAuthenticated) {
+    if (nextProps.auth.isAuthenticated) {
       // this.props.getCurrentUser(this.props.auth.user.id)
       console.log(this.props.auth)
 
