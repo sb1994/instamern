@@ -9,6 +9,8 @@ import {
   removeFollow,
 } from '../../actions/userAuthActions'
 import SocialPanel from './SocialPanel'
+import PostList from '../Posts/PostList'
+import PostFormModal from '../Posts/PostFormModal'
 import { Link } from 'react-router-dom'
 
 class UserProfile extends Component {
@@ -21,6 +23,7 @@ class UserProfile extends Component {
       isLoading: false,
       searchedUser: {},
       msg: '',
+      show: true,
     }
   }
   componentDidMount() {
@@ -48,6 +51,16 @@ class UserProfile extends Component {
       this.props.history.push('/login')
     }
   }
+  showPostCreateModal = () => {
+    this.setState({
+      show: !this.state.show,
+    })
+  }
+  closePostCreateModal = () => {
+    this.setState({
+      show: false,
+    })
+  }
   showEditPage = () => {
     this.props.history.push('/user/edit')
   }
@@ -61,7 +74,7 @@ class UserProfile extends Component {
   getFollowersLength = () => {}
   render() {
     let { searchedUser, user } = this.props.auth
-    let { isLoading } = this.state
+    let { isLoading, show } = this.state
     let { followers, following } = searchedUser
 
     let alreadyFollowing = false
@@ -140,6 +153,14 @@ class UserProfile extends Component {
           <div className='row'>
             <div className='col-12'>
               <h1>Posts</h1>
+              <button
+                className='btn btn-primary'
+                onClick={this.showPostCreateModal}
+              >
+                Show Form
+              </button>
+              <PostFormModal show={show} />
+              <PostList feed_id={user._id} />
             </div>
           </div>
         </div>
