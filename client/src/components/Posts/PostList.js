@@ -12,7 +12,6 @@ class PostList extends Component {
       <div>
         <h1>Post List</h1>
         <PostListItem />
-        <p>{this.props.auth.searchedUser._id}</p>
       </div>
     )
   }
