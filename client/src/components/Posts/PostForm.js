@@ -48,6 +48,15 @@ class PostForm extends Component {
   handleInputChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
+  handleFileChange = e => {
+    if (e.target.files[0]) {
+      const post_pic = e.target.files[0];
+      this.setState({
+        post_pic,
+        postImgURL: URL.createObjectURL(post_pic)
+      });
+    }
+  };
   render() {
     // console.log(this.state)
 
