@@ -9,7 +9,7 @@ class Landing extends Component {
 
     if (isAuthenticated) {
       // this.props.getCurrentUser(user.id)
-      this.props.history.push(`/profile/${user._id}`)
+      this.props.history.push(`/profile/${user._id}/posts`)
     }
   }
   componentDidUpdate() {}

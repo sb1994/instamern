@@ -28,7 +28,7 @@ class Navigation extends Component {
     const authLinks = (
       <Fragment>
         <Nav.Link href='/recommended'>Explore</Nav.Link>
-        <Nav.Link href={`/profile/${user._id}`}>
+        <Nav.Link href={`/profile/${user._id}/posts`}>
           <img
             src={user.profile_pic}
             style={{ height: 30 }}

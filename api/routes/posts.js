@@ -19,11 +19,11 @@ router.get('/:user_id', (req, res) =>
   })
 )
 router.post(
-  '/:user_id/create',
+  '/:feed_id/create',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     // let newPost = new Post({})
-    Post.find({ user: req.params.user_id }, (posts) => {
+    Post.find({ user: req.params.feed_id }, (posts) => {
       console.log(posts)
 
       res.json(posts)

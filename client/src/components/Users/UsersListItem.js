@@ -10,10 +10,11 @@ class UsersListItem extends Component {
   showUserProfile = () => {
     // console.log(this.props)
     let { history, user } = this.props
-    history.push(`/profile/${user._id}`)
+    history.push(`/profile/${user._id}/posts`)
   }
   render() {
     let { user } = this.props
+
     return (
       <div className='list-group-item'>
         <div className='row'>

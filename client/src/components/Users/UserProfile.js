@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import _ from 'lodash'
+import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 import {
@@ -8,10 +9,11 @@ import {
   addFollow,
   removeFollow,
 } from '../../actions/userAuthActions'
-import SocialPanel from './SocialPanel'
+//page compoents
 import PostList from '../Posts/PostList'
-import PostFormModal from '../Posts/PostFormModal'
-import { Link } from 'react-router-dom'
+import PostForm from '../Posts/PostForm'
+import FollowingList from '../Users/FollowingList'
+import FollowersList from './FollowersList'
 
 class UserProfile extends Component {
   constructor(props) {
@@ -24,21 +26,27 @@ class UserProfile extends Component {
       searchedUser: {},
       msg: '',
       show: true,
+      action: '',
     }
   }
   componentDidMount() {
-    let { match, auth } = this.props
+    let { match, auth, searchedUser } = this.props
+
     if (!auth.isAuthenticated) {
       this.props.history.push('/login')
     }
     this.setState({
       isLoading: true,
+      action: match.params.action,
     })
     //gets all the asociated data for the current logged in user
     this.props.getCurrentUser(auth.user._id)
 
-    //getst the data for the selected user
-    this.props.getSearchedUser(match.params.id)
+    if (!match.params.id) {
+      this.props.getSearchedUser(searchedUser._id)
+    } else {
+      this.props.getSearchedUser(match.params.id)
+    }
 
     this.setState({
       isLoading: false,
@@ -49,17 +57,15 @@ class UserProfile extends Component {
     // console.log(nextProps.auth.isAuthenticated)
     if (!nextProps.auth.isAuthenticated) {
       this.props.history.push('/login')
+    } else {
+      // console.log(nextProps.match.params)
+      let { action, id } = nextProps.match.params
+      this.props.getSearchedUser(id)
+
+      this.setState({
+        action: action,
+      })
     }
-  }
-  showPostCreateModal = () => {
-    this.setState({
-      show: !this.state.show,
-    })
-  }
-  closePostCreateModal = () => {
-    this.setState({
-      show: false,
-    })
   }
   showEditPage = () => {
     this.props.history.push('/user/edit')
@@ -71,10 +77,9 @@ class UserProfile extends Component {
     this.props.removeFollow(this.props.auth.searchedUser._id)
   }
 
-  getFollowersLength = () => {}
   render() {
     let { searchedUser, user } = this.props.auth
-    let { isLoading, show } = this.state
+    let { isLoading, show, action } = this.state
     let { followers, following } = searchedUser
 
     let alreadyFollowing = false
@@ -94,16 +99,9 @@ class UserProfile extends Component {
       sortedFollowings.push(followingee.user._id)
     })
 
-    // console.log(alreadyFollowing);
-
     if (isLoading || searchedUser === null) {
       return <div>Loading</div>
     } else {
-      // console.log(JSON.parse(JSON.stringify(searchedUser.followers)).length)
-      // console.log(searchedUser.followers.user[0].length)
-      // searchedUser.followers.filter((follower) => {
-      //   return follower._id
-      // })
       return (
         <div className='container'>
           <div className='row'>
@@ -139,10 +137,29 @@ class UserProfile extends Component {
                         ''
                       )}
                     </div>
-                    <SocialPanel
-                      followers={sortedFollowers}
-                      following={sortedFollowings}
-                    />
+                    <div className='col-12'>
+                      <div className='row'>
+                        <div className='col-md-4 col-12'>
+                          1{' '}
+                          <Link to={`/profile/${searchedUser._id}/posts`}>
+                            Posts
+                          </Link>
+                        </div>
+                        <div className='col-md-4 col-12'>
+                          {sortedFollowers.length}
+                          {/* <span className='text-muted'>Followers</span> */}
+                          <Link to={`/profile/${searchedUser._id}/followers`}>
+                            Followers
+                          </Link>
+                        </div>
+                        <div className='col-md-4 col-12'>
+                          {sortedFollowings.length}
+                          <Link to={`/profile/${searchedUser._id}/following`}>
+                            Following
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -152,15 +169,26 @@ class UserProfile extends Component {
           <hr />
           <div className='row'>
             <div className='col-12'>
-              <h1>Posts</h1>
-              <button
+              {/* <button
                 className='btn btn-primary'
                 onClick={this.showPostCreateModal}
               >
                 Show Form
-              </button>
-              <PostFormModal show={show} />
-              <PostList feed_id={user._id} />
+              </button> */}
+              {action === 'posts' ? (
+                <Fragment>
+                  <PostForm />
+                  <PostList />
+                </Fragment>
+              ) : (
+                ''
+              )}
+              {action === 'followers' ? <FollowersList /> : ''}
+              {action === 'following' ? (
+                <FollowingList following={searchedUser.following} />
+              ) : (
+                ''
+              )}
             </div>
           </div>
         </div>

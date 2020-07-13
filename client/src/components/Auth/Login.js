@@ -34,7 +34,7 @@ class Login extends Component {
       console.log(this.props.auth)
 
       // this.props.getCurrentUser(nextProps.auth.user._id)
-      this.props.history.push(`/profile/${nextProps.auth.user._id}`)
+      this.props.history.push(`/profile/${nextProps.auth.user._id}/posts`)
     }
   }
 

@@ -3,12 +3,16 @@ import { connect } from 'react-redux'
 import PostListItem from './PostListItem'
 
 class PostList extends Component {
+  componentDidMount() {
+    let { searchedUser } = this.props.auth
+    // console.log(searchedUser)
+  }
   render() {
     return (
       <div>
         <h1>Post List</h1>
         <PostListItem />
-        <p>{this.props.feed_id}</p>
+        <p>{this.props.auth.searchedUser._id}</p>
       </div>
     )
   }
