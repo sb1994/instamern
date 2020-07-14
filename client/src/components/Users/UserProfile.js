@@ -9,6 +9,7 @@ import {
   addFollow,
   removeFollow
 } from "../../actions/userAuthActions";
+import { getSelectedFeedPosts } from "../../actions/postActions";
 //page compoents
 import PostList from "../Posts/PostList";
 import PostForm from "../Posts/PostForm";
@@ -30,7 +31,7 @@ class UserProfile extends Component {
     };
   }
   componentDidMount() {
-    let { match, auth, searchedUser } = this.props;
+    let { match, auth, searchedUser, post } = this.props;
 
     if (!auth.isAuthenticated) {
       this.props.history.push("/login");
@@ -44,9 +45,13 @@ class UserProfile extends Component {
 
     if (!match.params.id) {
       this.props.getSearchedUser(searchedUser._id);
+      this.props.getSelectedFeedPosts(searchedUser._id);
     } else {
       this.props.getSearchedUser(match.params.id);
+      this.props.getSelectedFeedPosts(match.params.id);
     }
+
+    console.log(post);
 
     this.setState({
       isLoading: false
@@ -79,8 +84,10 @@ class UserProfile extends Component {
 
   render() {
     let { searchedUser, user } = this.props.auth;
+    let { post } = this.props;
     let { isLoading, show, action } = this.state;
     let { followers, following } = searchedUser;
+    // console.log(post.posts);
 
     let alreadyFollowing = false;
     let sortedFollowers = [];
@@ -178,7 +185,7 @@ class UserProfile extends Component {
               {action === "posts" ? (
                 <Fragment>
                   <PostForm feed_id={searchedUser._id} />
-                  <PostList />
+                  <PostList posts={post.posts} />
                 </Fragment>
               ) : (
                 ""
@@ -198,7 +205,8 @@ class UserProfile extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  post: state.post
 });
 
 export default connect(
@@ -207,6 +215,7 @@ export default connect(
     getSearchedUser,
     getCurrentUser,
     addFollow,
-    removeFollow
+    removeFollow,
+    getSelectedFeedPosts
   }
 )(UserProfile);
