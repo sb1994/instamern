@@ -27,7 +27,6 @@ class PostForm extends Component {
     //   text: this.state.text,
     //   location: {}
     // };
-    console.log(this.state)
   }
   handleInputChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })

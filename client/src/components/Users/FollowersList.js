@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import UsersListItem from './UsersListItem'
+import { withRouter } from 'react-router-dom'
 
 class FollowersList extends Component {
   constructor(props) {
@@ -11,39 +12,49 @@ class FollowersList extends Component {
       isLoading: false,
     }
   }
-  componentWillReceiveProps(nextProps) {
-    // console.log(nextProps.auth.searchedUser)
-    let { searchedUser } = nextProps.auth
-
-    if (nextProps.auth.searchedUser.followers === undefined) {
-      this.setState({ isLoading: true })
-    } else {
+  componentDidMount() {
+    // console.log(this.props.auth.searchedUser.followers.length)
+  }
+  componentDidUpdate(prevProps, prevState) {
+    console.log(prevProps.match.params.action)
+    console.log(prevProps.auth.searchedUser.followers)
+    if (
+      prevProps.auth.searchedUser.followers !==
+      this.props.auth.searchedUser.followers
+    ) {
+      console.log(this.props.auth.searchedUser.followers)
       this.setState({
-        isLoading: false,
-        followers: searchedUser.followers,
+        followers: this.props.auth.searchedUser.followers,
       })
     }
   }
+  // componentWillReceiveProps(nextProps) {
+  //   // console.log(nextProps.auth.searchedUser)
+  //   let { searchedUser } = nextProps.auth
+
+  //   if (nextProps.auth.searchedUser.followers === undefined) {
+  //     this.setState({ isLoading: true })
+  //   } else {
+  //     this.setState({
+  //       isLoading: false,
+  //       followers: searchedUser.followers,
+  //     })
+  //   }
+  // }
   render() {
     let { searchedUser } = this.props.auth
     // let { isLoading } = this.state
     let { isLoading, followers } = this.state
-    // let { following } = this.props
-    // console.log(following)
-
-    // if (!searchedUser) {
-    //   r
-    // }
     if (isLoading || searchedUser === null) {
       return (
         <div>
           <p>isLoading</p>
         </div>
       )
-    } else if (followers.length < 0) {
+    } else if (followers.length <= 0) {
       return (
         <div>
-          <p>Hello</p>
+          <p>You have Nobody following you :( </p>
         </div>
       )
     } else {
@@ -61,4 +72,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
-export default connect(mapStateToProps, mapDispatchToProps)(FollowersList)
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(FollowersList)
+)
