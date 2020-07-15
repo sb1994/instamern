@@ -16,17 +16,12 @@ class PostForm extends Component {
   }
 
   handlePostCreate = () => {
-    console.log(this.props.auth.searchedUser)
+    // console.log(this.props.auth.searchedUser)
     console.log(this.state)
 
     let { text, post_img } = this.state
     let { searchedUser, user } = this.props.auth
     let { feed_id } = this.props
-
-    // let createPostData = {
-    //   text: this.state.text,
-    //   location: {}
-    // };
   }
   handleInputChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })
@@ -45,6 +40,7 @@ class PostForm extends Component {
             longitude: longitude,
             feed_id: feed_id,
             text,
+            post_pic,
           })
         },
         (error) => {

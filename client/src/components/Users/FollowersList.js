@@ -22,25 +22,11 @@ class FollowersList extends Component {
       prevProps.auth.searchedUser.followers !==
       this.props.auth.searchedUser.followers
     ) {
-      console.log(this.props.auth.searchedUser.followers)
       this.setState({
         followers: this.props.auth.searchedUser.followers,
       })
     }
   }
-  // componentWillReceiveProps(nextProps) {
-  //   // console.log(nextProps.auth.searchedUser)
-  //   let { searchedUser } = nextProps.auth
-
-  //   if (nextProps.auth.searchedUser.followers === undefined) {
-  //     this.setState({ isLoading: true })
-  //   } else {
-  //     this.setState({
-  //       isLoading: false,
-  //       followers: searchedUser.followers,
-  //     })
-  //   }
-  // }
   render() {
     let { searchedUser } = this.props.auth
     // let { isLoading } = this.state
