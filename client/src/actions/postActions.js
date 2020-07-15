@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from "axios";
 
 import {
   ADD_POST,
@@ -12,27 +12,27 @@ import {
   ADD_COMMENT,
   DELETE_COMMENT,
   GET_COMMENTS,
-  GET_COMMENT,
-} from './action_types'
+  GET_COMMENT
+} from "./action_types";
 //get selected feed posts
 
-export const getSelectedFeedPosts = (feedId) => (dispatch) => {
+export const getSelectedFeedPosts = feedId => dispatch => {
   // dispatch(setPostLoading());
 
   axios
     .get(`/api/posts/${feedId}/feed`)
     .then(
-      (res) =>
+      res =>
         dispatch({
           type: GET_POSTS,
-          payload: res.data,
+          payload: res.data
         })
       // console.log(res)
     )
-    .catch((err) =>
+    .catch(err =>
       dispatch({
         type: GET_POSTS,
-        payload: null,
+        payload: null
       })
-    )
-}
+    );
+};

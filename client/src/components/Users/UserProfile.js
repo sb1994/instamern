@@ -67,25 +67,6 @@ class UserProfile extends Component {
         action: params.action,
       })
     }
-    // console.log(this.props.auth.searchedUser)
-    // this.setState({
-    //   followers: prevProps.props.searchedUser.followers,
-    // })
-    //   if (!prevProps.auth.isAuthenticated) {
-    //     this.props.history.push('/login')
-    //   }
-    //   if (prevProps.auth.searchedUser.) {
-
-    //   } else {
-    //     // console.log(prevProps.match.params)
-
-    //     console.log(action)
-    //     // this.props.getSearchedUser(id)
-
-    //     // this.setState({
-    //     //   action: action,
-    //     // })
-    //   }
   }
   componentWillReceiveProps(nextProps) {
     // console.log(nextProps.auth.isAuthenticated)
