@@ -36,3 +36,25 @@ export const getSelectedFeedPosts = feedId => dispatch => {
       })
     );
 };
+export const createPost = ({ feedId, text, post_pic }) => dispatch => {
+  // dispatch(setPostLoading());
+
+  console.log(feedId, text, post_pic);
+
+  // axios
+  //   .get(`/api/posts/${feedId}/feed`)
+  //   .then(
+  //     res =>
+  //       dispatch({
+  //         type: GET_POSTS,
+  //         payload: res.data
+  //       })
+  //     // console.log(res)
+  //   )
+  //   .catch(err =>
+  //     dispatch({
+  //       type: GET_POSTS,
+  //       payload: null
+  //     })
+  //   );
+};
