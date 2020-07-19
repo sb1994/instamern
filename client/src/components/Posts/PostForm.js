@@ -1,95 +1,104 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { createPost } from "../../actions/postActions";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { createPost } from '../../actions/postActions'
 class PostForm extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
-      text: "",
+      caption: '',
       post_pic: null,
-      postImgURL: "",
-      longitude: "",
-      latitude: "",
-      feed_id: ""
-    };
+      postImgURL: '',
+      longitude: '',
+      latitude: '',
+      feed_id: '',
+    }
   }
-
   handlePostCreate = () => {
-    // console.log(this.props.auth.searchedUser)
-    console.log(this.state);
-
-    let { text, post_img } = this.state;
-    let { searchedUser, user } = this.props.auth;
-    let { feed_id } = this.props;
-  };
-  handleInputChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-  handleFileChange = e => {
-    let { text, post_pic } = this.state;
-    let { searchedUser, user } = this.props.auth;
-    let { feed_id } = this.props;
+    let { caption, post_pic } = this.state
+    let { searchedUser, user } = this.props.auth
+    let { feed_id } = this.props
+    const newPost = {
+      caption,
+      post_pic,
+      feed_id,
+    }
+    // console.log(newPost)
+    if (newPost.caption === '' && newPost.post_pic === null) {
+      console.log('please use at least one input')
+    } else if (newPost.caption !== '' && newPost.post_pic === null) {
+      console.log('createing just a newPost.caption post')
+      this.props.createPost(newPost)
+    } else if (newPost.caption === '' && newPost.post_pic !== null) {
+      console.log('create just image post')
+    } else {
+      console.log('creating caption and image post')
+    }
+  }
+  handleInputChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value })
+  }
+  handleFileChange = (e) => {
+    let { caption, post_pic } = this.state
+    let { searchedUser, user } = this.props.auth
+    let { feed_id } = this.props
     if (e.target.files[0]) {
-      const post_pic = e.target.files[0];
+      const post_pic = e.target.files[0]
       navigator.geolocation.getCurrentPosition(
-        position => {
-          let { latitude, longitude } = position.coords;
+        (position) => {
+          let { latitude, longitude } = position.coords
           this.setState({
             latitude: latitude,
             longitude: longitude,
             feed_id: feed_id,
-            text,
+            caption,
             post_pic,
-            postImgURL: URL.createObjectURL(post_pic)
-          });
+            postImgURL: URL.createObjectURL(post_pic),
+          })
         },
-        error => {
-          this.props.displayError("Error dectecting your location");
-          console.error(JSON.stringify(error));
+        (error) => {
+          this.props.displayError('Error dectecting your location')
+          console.error(JSON.stringify(error))
         },
         { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-      );
+      )
     }
-  };
+  }
   render() {
     // console.log(this.state)
-    let { postImgURL } = this.state;
+    let { postImgURL } = this.state
 
     return (
       <div>
         <h1>POst Form</h1>
-        <img src={postImgURL} className="img-responsive card-img" alt="" />
+        <img src={postImgURL} className='img-responsive card-img' alt='' />
         <input
-          type="text"
-          name="text"
-          value={this.state.text}
-          placeholder="Post text"
+          type='text'
+          name='caption'
+          value={this.state.caption}
+          placeholder='Post caption'
           onChange={this.handleInputChange}
         />
         <input
-          type="file"
+          type='file'
           // className='btn btn-green'
           value={this.state.profile_pic}
-          name="post_pic"
-          id="post_pic"
+          name='post_pic'
+          id='post_pic'
           onChange={this.handleFileChange}
         />
-        <button className="btn btn-primary" onClick={this.handlePostCreate}>
+        <button className='btn btn-primary' onClick={this.handlePostCreate}>
           Handle Post Create
         </button>
       </div>
-    );
+    )
   }
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth
-});
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+})
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {}
 
-export default connect(
-  mapStateToProps,
-  { createPost }
-)(PostForm);
+export default connect(mapStateToProps, { createPost })(PostForm)

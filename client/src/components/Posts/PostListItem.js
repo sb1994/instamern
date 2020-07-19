@@ -3,9 +3,10 @@ import { connect } from 'react-redux'
 
 class PostListItem extends Component {
   render() {
+    let { post } = this.props
     return (
       <div>
-        <h2>PostListItem</h2>
+        <h2>{post.user.name}</h2>
       </div>
     )
   }
