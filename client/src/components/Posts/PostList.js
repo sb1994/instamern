@@ -16,17 +16,17 @@ class PostList extends Component {
     // console.log(this.props.posts);
     let { posts } = this.props
 
-    console.log(posts)
+    if (posts === undefined) {
+      return <div>isLoading</div>
+    } else if (posts.length <= 0) {
+      return <div>You Have Not posts</div>
+    } else {
+      let renderPosts = this.props.posts.map((post) => {
+        return <PostListItem key={post._id} post={post} />
+      })
 
-    let renderPosts = this.props.posts.map((post) => {
-      return <PostListItem key={post._id} post={post} />
-    })
-    return (
-      <div>
-        <h1>Post List</h1>
-        {renderPosts}
-      </div>
-    )
+      return <div>{renderPosts}</div>
+    }
   }
 }
 

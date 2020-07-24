@@ -18,12 +18,11 @@ class UsersListItem extends Component {
     return (
       <div className='list-group-item'>
         <div className='row'>
-          <div className='col-6'>
+          <div className='col-6' onClick={this.showUserProfile}>
             <img
               src={user.profile_pic}
               alt=''
               className='img-fluid float-left'
-              onClick={this.showUserProfile}
               style={{ height: 100 }}
             />
             <p>{user.name}</p>

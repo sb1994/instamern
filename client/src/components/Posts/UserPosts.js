@@ -1,37 +1,31 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import UserProfile from "../Users/UserProfile";
-import PostList from "../Posts/PostList";
-import { getSelectedFeedPosts } from "../../actions/postActions";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import UserProfile from '../Users/UserProfile'
+import PostList from '../Posts/PostList'
+import { getSelectedFeedPosts } from '../../actions/postActions'
 
 class UserPosts extends Component {
   componentDidMount() {
-    this.props.getSelectedFeedPosts(this.props.match.params.id);
+    this.props.getSelectedFeedPosts(this.props.match.params.id)
   }
   render() {
+    let { posts } = this.props.post
+
     return (
       <div>
         <UserProfile id={this.props.match.params.id} />
         <hr />
-
-        {this.props.post.posts === undefined ? (
-          <p>No Posts</p>
-        ) : (
-          <PostList posts={this.props.post.posts} />
-        )}
+        <PostList posts={posts} />
       </div>
-    );
+    )
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
-  post: state.post
-});
+  post: state.post,
+})
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {}
 
-export default connect(
-  mapStateToProps,
-  { getSelectedFeedPosts }
-)(UserPosts);
+export default connect(mapStateToProps, { getSelectedFeedPosts })(UserPosts)
