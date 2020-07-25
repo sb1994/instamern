@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createPost } from '../../actions/postActions'
+import { storage } from '../../firebase'
+
 class PostForm extends Component {
   constructor(props) {
     super(props)
@@ -18,6 +20,7 @@ class PostForm extends Component {
     let { caption, post_pic } = this.state
     let { searchedUser, user } = this.props.auth
     let { feed_id } = this.props
+    console.log(this.state)
     const newPost = {
       caption,
       post_pic,
@@ -27,12 +30,9 @@ class PostForm extends Component {
     if (newPost.caption === '' && newPost.post_pic === null) {
       console.log('please use at least one input')
     } else if (newPost.caption !== '' && newPost.post_pic === null) {
-      console.log('createing just a newPost.caption post')
-      this.props.createPost(newPost)
-    } else if (newPost.caption === '' && newPost.post_pic !== null) {
-      console.log('create just image post')
+      console.log('please add image')
+      // this.props.createPost(newPost)
     } else {
-      console.log('creating caption and image post')
     }
   }
   handleInputChange = (e) => {
