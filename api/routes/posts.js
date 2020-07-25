@@ -44,7 +44,11 @@ router.post(
         user: user._id
       });
       newPost.save().then(post => {
-        res.json(post);
+        Post.find({ feed_id: post.feed_id })
+          .populate("user")
+          .then(posts => {
+            res.json(posts);
+          });
       });
     } else {
       let newPost = new Post({
@@ -54,7 +58,11 @@ router.post(
         user: user._id
       });
       newPost.save().then(post => {
-        res.json(post);
+        Post.find({ feed_id: post.feed_id })
+          .populate("user")
+          .then(posts => {
+            res.json(posts);
+          });
       });
     }
   }

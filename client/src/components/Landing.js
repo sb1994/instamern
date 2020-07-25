@@ -1,29 +1,30 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { getCurrentUser } from '../actions/userAuthActions'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { getCurrentUser } from "../actions/userAuthActions";
 class Landing extends Component {
   componentDidMount() {
-    console.log(this.props.auth.isAuthenticated)
-    let { isAuthenticated, user } = this.props.auth
-    console.log(user)
+    let { isAuthenticated, user } = this.props.auth;
 
     if (isAuthenticated) {
       // this.props.getCurrentUser(user.id)
-      this.props.history.push(`/profile/${user._id}/posts`)
+      this.props.history.push(`/profile/${user._id}/posts`);
     }
   }
   componentDidUpdate() {}
   render() {
     return (
-      <div className='container'>
+      <div className="container">
         <h1>Landing</h1>
       </div>
-    )
+    );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    auth: state.auth,
-  }
-}
-export default connect(mapStateToProps, { getCurrentUser })(Landing)
+    auth: state.auth
+  };
+};
+export default connect(
+  mapStateToProps,
+  { getCurrentUser }
+)(Landing);

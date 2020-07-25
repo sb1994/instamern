@@ -36,7 +36,8 @@ const post = (state = initialState, action) => {
     case ADD_POST:
       return {
         ...state,
-        postAdded: true
+        postAdded: true,
+        posts: action.payload
       };
     case DELETE_POST:
       return {

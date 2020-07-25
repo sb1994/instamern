@@ -5,12 +5,12 @@ class PostListItem extends Component {
   render() {
     let { post, auth } = this.props;
     return (
-      <div className="card">
-        {post.feed_id === auth.user._id ? (
+      <div className="card col-md-4">
+        {/* {post.feed_id === auth.user._id ? (
           <button className="btn btn-primary">X</button>
         ) : (
           ""
-        )}
+        )} */}
         <h2>{post.user.name}</h2>
         <p>{post.caption}</p>
       </div>
