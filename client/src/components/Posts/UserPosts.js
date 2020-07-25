@@ -76,17 +76,21 @@ class UserPosts extends Component {
       post_pic,
       feed_id: this.props.match.params.id
     };
-    console.log(newPost);
-    if (newPost.caption === "" && newPost.post_pic === null) {
-      console.log("please use at least one input");
-    } else if (newPost.caption !== "" && newPost.post_pic === null) {
-      console.log("createing just a newPost.caption post");
-      this.props.createPost(newPost);
-    } else if (newPost.caption === "" && newPost.post_pic !== null) {
-      console.log("create just image post");
-    } else {
-      console.log("creating caption and image post");
-    }
+    // console.log(newPost);
+    // if (newPost.caption === "" && newPost.post_pic === null) {
+    //   console.log("please use at least one input");
+    // } else if (newPost.caption !== "" && newPost.post_pic === null) {
+    //   console.log("createing just a newPost.caption post");
+    //   this.props.createPost(newPost);
+    // } else if (newPost.caption === "" && newPost.post_pic !== null) {
+    //   console.log("create just image post");
+    // } else {
+    //   console.log("creating caption and image post");
+    // }
+
+    this.setState({
+      show: false
+    });
   };
   render() {
     let { posts } = this.props.post;
@@ -96,7 +100,7 @@ class UserPosts extends Component {
     // console.log(this.state.show);
     // let
     return (
-      <div>
+      <div className="container">
         <UserProfile id={this.props.match.params.id} />
         <hr />
         <div className="row">
@@ -135,14 +139,7 @@ class UserPosts extends Component {
                   Handle Post Create
                 </button>
               </Modal.Body>
-              <Modal.Footer>
-                {/* <Button variant="secondary" onClick={handleClose}>
-                  Close
-                </Button>
-                <Button variant="primary" onClick={handleClose}>
-                  Save Changes
-                </Button> */}
-              </Modal.Footer>
+              <Modal.Footer></Modal.Footer>
             </Modal>
           ) : null}
         </div>
