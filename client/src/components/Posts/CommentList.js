@@ -1,11 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-class CommentForm extends Component {
+class CommentList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
+
   render() {
     return (
       <div className="col-12">
-        <h1>CommentForm</h1>
+        <p>{this.props.auth.user._id}</p>
+        <h1>CommentList</h1>
       </div>
     );
   }
@@ -20,4 +27,4 @@ const mapDispatchToProps = {};
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CommentForm);
+)(CommentList);

@@ -1,13 +1,15 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { Modal } from "react-bootstrap";
-
+import CommentForm from "./CommentForm";
+import CommentList from "./CommentList";
+import "./style.css";
 class PostListItem extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      show: false
+      show: true
     };
   }
   handleShow = () => {
@@ -30,9 +32,10 @@ class PostListItem extends Component {
 
         {this.state.show ? (
           <Modal
-            className=".modal-90w"
+            dialogClassName="modal-size"
             show={this.state.show}
             onHide={this.handleClose}
+            // style={{ height: "" }}
           >
             <Modal.Body>
               <div className="row">
@@ -42,9 +45,15 @@ class PostListItem extends Component {
                     alt=""
                     srcset=""
                     className="img-fluid"
+                    style={{ height: "500px" }}
                   />
                 </div>
-                <div className="col-6">comment section</div>
+                <div className="col-6">
+                  <div className="row">
+                    <CommentForm />
+                    <CommentList />
+                  </div>
+                </div>
               </div>
             </Modal.Body>
           </Modal>
