@@ -33,13 +33,15 @@ router.post(
   (req, res) => {
     // console.log(req.user)
     let { user } = req
-    let { caption, post_pic } = req.body
+    let { caption, post_pic, longitude, latitude } = req.body
     let { feed_id } = req.params
     // console.log(caption, post_pic)
     if (post_pic === null && caption !== '') {
       let newPost = new Post({
         caption,
         feed_id,
+        longitude,
+        latitude,
         post_pic: '',
         user: user._id,
       })
@@ -54,6 +56,8 @@ router.post(
       let newPost = new Post({
         caption,
         feed_id,
+        longitude,
+        latitude,
         post_pic,
         user: user._id,
       })

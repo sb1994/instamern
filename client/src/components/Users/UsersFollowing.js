@@ -6,7 +6,7 @@ import FollowingList from '../Users/FollowingList'
 export class UsersFollowing extends Component {
   render() {
     return (
-      <div>
+      <div className='container'>
         <UserProfile id={this.props.match.params.id} />
         <hr />
         <FollowingList following={this.props.auth.searchedUser.following} />
