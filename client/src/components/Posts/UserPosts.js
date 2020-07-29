@@ -115,7 +115,7 @@ class UserPosts extends Component {
               console.log(this.state);
 
               this.setState({
-                text: "",
+                caption: "",
                 post_pic: null,
                 postImgUrl: "",
                 postImgURL: "",

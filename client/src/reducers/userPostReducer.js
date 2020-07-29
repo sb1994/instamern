@@ -5,61 +5,66 @@ import {
   DELETE_POST,
   POST_LOADING,
   ADD_COMMENT,
-  DELETE_POSTS,
-} from '../actions/action_types'
+  DELETE_POSTS
+} from "../actions/action_types";
 
 const initialState = {
   posts: [],
   post: {},
   loading: false,
-  postAdded: false,
-}
+  postAdded: false
+};
 
 const post = (state = initialState, action) => {
   switch (action.type) {
     case POST_LOADING:
       return {
         ...state,
-        loading: true,
-      }
+        loading: true
+      };
     case GET_POSTS:
       return {
         ...state,
         posts: action.payload,
-        loading: false,
-      }
+        loading: false
+      };
     case GET_POST:
       return {
         ...state,
         post: action.payload,
-        loading: false,
-      }
+        loading: false
+      };
     case ADD_POST:
       return {
         ...state,
         postAdded: true,
-        posts: action.payload,
-      }
+        posts: action.payload
+      };
+    case ADD_COMMENT:
+      return {
+        ...state,
+        posts: action.payload
+      };
     case DELETE_POST:
       return {
         ...state,
-        posts: state.posts.filter((post) => post._id !== action.payload),
-      }
+        posts: state.posts.filter(post => post._id !== action.payload)
+      };
     case DELETE_POSTS:
       return {
         ...state,
-        posts: {},
-      }
+        posts: {}
+      };
     case ADD_COMMENT:
       // console.log(action.payload.post.comments);
 
       return {
         ...state,
         posts: action.payload,
-        loading: false,
-      }
+        loading: false
+      };
     default:
-      return state
+      return state;
   }
-}
-export default post
+};
+export default post;

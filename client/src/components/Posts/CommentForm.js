@@ -1,44 +1,54 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { createComment } from "../../actions/postActions";
 class CommentForm extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      comment: '',
-    }
+      comment: ""
+    };
   }
   handleCommentSubmit = () => {
-    console.log(this.props.post_id)
-  }
+    let newComment = {
+      post: this.props.post_id,
+      comment: this.state.comment
+    };
+    this.props.createComment(newComment);
+  };
 
-  handleInputChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value })
-  }
+  handleInputChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
   render() {
     return (
-      <div className='col-12'>
-        <h1>CommentForm</h1>
-        <input
-          type='text'
+      <div className="col-12">
+        <textarea
+          class="form-control"
+          rows="3"
+          name="comment"
           onChange={this.handleInputChange}
-          name='comment'
           value={this.state.comment}
         />
-        <p>{this.state.comment}</p>
-        <button className='btn btn-primary' onClick={this.handleCommentSubmit}>
+        <button
+          className="btn btn-primary"
+          onClick={this.handleCommentSubmit}
+          disabled={this.state.comment === ""}
+        >
           Add Comment
         </button>
       </div>
-    )
+    );
   }
 }
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-})
+const mapStateToProps = state => ({
+  auth: state.auth
+});
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(CommentForm)
+export default connect(
+  mapStateToProps,
+  { createComment }
+)(CommentForm);

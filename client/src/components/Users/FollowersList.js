@@ -27,9 +27,7 @@ class FollowersList extends Component {
   }
   render() {
     let { searchedUser } = this.props.auth;
-    // let { isLoading } = this.state
     let { isLoading, followers } = this.state;
-    console.log(followers);
     if (followers === undefined) {
       return <div>isLoading</div>;
     } else if (followers.length <= 0) {
