@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getSelectedFeedPosts } from '../../actions/postActions'
+import { getSelectedFeedPosts, deletePosts } from '../../actions/postActions'
 import PostListItem from './PostListItem'
 import { withRouter } from 'react-router-dom'
 
@@ -18,6 +18,9 @@ class PostList extends Component {
       console.log('getting correct posts')
     }
   }
+  handlePostDelete = () => {
+    this.props.deletePosts()
+  }
   render() {
     // console.log(this.props.posts);
     let { posts } = this.props
@@ -34,7 +37,16 @@ class PostList extends Component {
       let renderPosts = this.props.posts.map((post) => {
         return <PostListItem key={post._id} post={post} />
       })
-      return <div className='row'>{renderPosts}</div>
+      return (
+        <div className='row'>
+          <div className='col-md-12'>
+            <button className='btn btn-primary' onClick={this.handlePostDelete}>
+              Delete All
+            </button>
+          </div>
+          {renderPosts}
+        </div>
+      )
     }
   }
 }
@@ -45,5 +57,5 @@ const mapStateToProps = (state) => ({
 })
 
 export default withRouter(
-  connect(mapStateToProps, { getSelectedFeedPosts })(PostList)
+  connect(mapStateToProps, { getSelectedFeedPosts, deletePosts })(PostList)
 )

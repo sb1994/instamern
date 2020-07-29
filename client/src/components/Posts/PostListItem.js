@@ -24,6 +24,7 @@ class PostListItem extends Component {
   }
   render() {
     let { post, auth } = this.props
+    console.log(this.props.post)
     return (
       <Fragment>
         <div className='col-md-4 col-6 col-lg-3 mb-1' onClick={this.handleShow}>
@@ -42,8 +43,6 @@ class PostListItem extends Component {
                 <div className='col-6'>
                   <img
                     src={post.post_pic}
-                    alt=''
-                    srcset=''
                     className='img-fluid'
                     style={{ height: '500px' }}
                   />
@@ -52,7 +51,7 @@ class PostListItem extends Component {
                 <div className='col-6'>
                   <div className='row'>
                     <CommentForm post_id={post._id} />
-                    <CommentList />
+                    <CommentList comments={post.comments} />
                   </div>
                 </div>
               </div>

@@ -10,6 +10,7 @@ router.get('/test', (req, res) => res.json({ msg: 'Posts Routes Works' }))
 router.get('/all', (req, res) =>
   Post.find()
     .populate('user')
+    .populate({ path: 'comments', populate: [{ path: 'user' }] })
     .then((posts) => {
       res.json(posts)
     })
@@ -24,9 +25,15 @@ router.get('/:user_id', (req, res) =>
 router.get('/:feed_id/feed', (req, res) =>
   Post.find({ feed_id: req.params.feed_id })
     .populate('user')
+    .populate({ path: 'comments', populate: [{ path: 'user' }] })
     .then((posts) => {
       res.json(posts)
     })
+)
+router.delete('/delete', (req, res) =>
+  Post.deleteMany({}).then((posts) => {
+    res.json(posts)
+  })
 )
 router.get('/:user_id', (req, res) =>
   Post.find({ user: req.params.user_id }, (posts) => {
@@ -56,6 +63,7 @@ router.post(
       newPost.save().then((post) => {
         Post.find({ feed_id: post.feed_id })
           .populate('user')
+          .populate('comments')
           .then((posts) => {
             res.json(posts)
           })
@@ -88,15 +96,39 @@ router.post(
     let { user } = req
     // console.log(text);
 
-    let newComment = new Comment({
+    let newComment = {
       post: post_id,
       comment,
       user: user._id,
-    })
+    }
+    // console.log(newComment)
 
-    newComment.save().then((comment) => {
-      res.json(comment)
-    })
+    // // newComment.save().then((comment) => {
+    Post.findOneAndUpdate(
+      { _id: post_id },
+      { $push: { comments: newComment } },
+      { new: true, upsert: true }
+    )
+      .then((post) => {
+        console.log(post)
+        Post.find({ feed_id: post.feed_id })
+          .sort({ created: -1 })
+          .populate('user')
+          .populate({ path: 'comments', populate: [{ path: 'user' }] })
+          .then((posts) => {
+            console.log(posts)
+            res.json(posts)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      })
+      .catch((err) => {
+        console.log()
+      })
+
+    res.json(comment)
+    // })
 
     // console.log(req.params,);
     // res.json({ msg: newComment });
