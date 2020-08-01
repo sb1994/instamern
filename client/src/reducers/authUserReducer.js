@@ -3,9 +3,9 @@ import {
   SET_SEARCHED_USER,
   GET_USERS,
   SUCCESS_FOLLOW,
-  SUCCESS_FOLLOW_REMOVE,
-} from '../actions/action_types'
-import isEmpty from '../validation/isEmpty'
+  SUCCESS_FOLLOW_REMOVE
+} from "../actions/action_types";
+import isEmpty from "../validation/isEmpty";
 
 const initialState = {
   token: null,
@@ -15,8 +15,8 @@ const initialState = {
   isAuthenticated: false,
   user: {},
   searchedUser: {},
-  users: [],
-}
+  users: []
+};
 
 const auth = (state = initialState, action) => {
   switch (action.type) {
@@ -24,31 +24,31 @@ const auth = (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: !isEmpty(action.payload),
-        user: action.payload,
-      }
+        user: action.payload
+      };
     case GET_USERS:
       return {
         ...state,
-        users: action.payload,
-      }
+        users: action.payload
+      };
     case SET_SEARCHED_USER:
       return {
         ...state,
-        searchedUser: action.payload,
-      }
+        searchedUser: action.payload
+      };
     case SUCCESS_FOLLOW:
       return {
         ...state,
-        searchedUser: action.payload,
-      }
+        searchedUser: action.payload
+      };
     case SUCCESS_FOLLOW_REMOVE:
       return {
         ...state,
-        searchedUser: action.payload,
-      }
+        searchedUser: action.payload
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default auth
+export default auth;
