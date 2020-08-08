@@ -35,9 +35,9 @@ class PostList extends Component {
       return (
         <div className="row">
           <div className="col-md-12">
-            <button className="btn btn-primary" onClick={this.handlePostDelete}>
+            {/* <button className="btn btn-primary" onClick={this.handlePostDelete}>
               Delete All
-            </button>
+            </button> */}
           </div>
           {renderPosts}
         </div>

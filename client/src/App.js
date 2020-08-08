@@ -18,6 +18,7 @@ import UserList from "./components/Users/UsersList";
 import UsersFollowers from "./components/Users/UsersFollowers";
 import UsersFollowing from "./components/Users/UsersFollowing";
 import UserPosts from "./components/Posts/UserPosts";
+import PostMap from "./components/Posts/PostMap";
 
 //navigation
 import Navigation from "./components/Nav/Navigation";
@@ -40,6 +41,11 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile/:id/posts" component={UserPosts} />
+            <Route
+              exact
+              path="/profile/:id/posts/activities"
+              component={PostMap}
+            />
             <Route
               exact
               path="/profile/:id/followers"
