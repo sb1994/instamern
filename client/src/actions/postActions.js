@@ -47,13 +47,24 @@ export const getSelectedFeedPosts = (feed_id) => (dispatch) => {
       )
   }
 }
-export const createPost = ({ feed_id, caption, post_pic }) => (dispatch) => {
+export const createPost = ({
+  feed_id,
+  caption,
+  post_pic,
+  latitude,
+  longitude,
+}) => (dispatch) => {
   // dispatch(setPostLoading());
 
   console.log(feed_id, caption, post_pic)
 
   axios
-    .post(`/api/posts/${feed_id}/create`, { caption, post_pic })
+    .post(`/api/posts/${feed_id}/create`, {
+      caption,
+      post_pic,
+      latitude,
+      longitude,
+    })
     .then(
       (res) =>
         dispatch({

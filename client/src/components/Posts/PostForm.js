@@ -17,16 +17,17 @@ class PostForm extends Component {
     }
   }
   handlePostCreate = () => {
-    let { caption, post_pic } = this.state
+    let { caption, post_pic, longitude, latitude } = this.state
     let { searchedUser, user } = this.props.auth
     let { feed_id } = this.props
-    console.log(this.state)
     const newPost = {
       caption,
       post_pic,
       feed_id,
+      longitude,
+      latitude,
     }
-    // console.log(newPost)
+    console.log(newPost)
     if (newPost.caption === '' && newPost.post_pic === null) {
       console.log('please use at least one input')
     } else if (newPost.caption !== '' && newPost.post_pic === null) {
