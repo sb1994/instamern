@@ -25,9 +25,9 @@ class CommentForm extends Component {
   }
   render() {
     return (
-      <div className='col-12'>
+      <div className='col-12 mb-2'>
         <textarea
-          className='form-control'
+          className='form-control mb-2'
           rows='3'
           name='comment'
           onChange={this.handleInputChange}
